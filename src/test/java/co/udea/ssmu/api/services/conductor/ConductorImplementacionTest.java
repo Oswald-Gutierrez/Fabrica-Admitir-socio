@@ -29,9 +29,25 @@ class ConductorImplementacionTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         conductor = new Conductor();
+        conductor.setConductorId(Long.valueOf(10L));
         conductor.setNombre("Oswald Gutierrez");
+        conductor.setApellido("Cortina");
+        conductor.setEmail("odaniel@gmail.com");
         conductor.setCelular("3102580351");
-        conductor.setConductorId(Long.valueOf(11));
+        conductor.setEdad(2);
+        conductor.setDireccion("Udea");
+        conductor.setContrasena("Segura123");
+        conductor.setEstadoActividad("Suspendido");
+        conductor.setClasificacion("top");
+        conductor.setCiudad("Medellin");
+        conductor.setStrikes(3);
+        conductor.setPlaca("abc123");
+        conductor.setMarca("Lamborghini");
+        conductor.setModelo("Urus");
+        conductor.setDescripcionVehiculo("Soy veloz, mas que veloz, soy un rayo");
+        conductor.setAnioVehiculo(2022);
+        conductor.setNumeroRegistroVehiculo("199991919191");
+        conductor.setColor("amarillo");
     }
 
     @Test
@@ -44,51 +60,39 @@ class ConductorImplementacionTest {
     @Test
     void saveConductor() {
 
-        Conductor conductorGuardar = new Conductor();
-        conductorGuardar.setNombre("Oswald Cortina ");
-        conductorGuardar.setConductorId(Long.valueOf(109));
+        when(conductorRepositorio.save(any(Conductor.class))).thenReturn(conductor);
 
-        when(conductorRepositorio.save(any(Conductor.class))).thenReturn(conductorGuardar);
-
-
-        Conductor savedConductor = conductorImplementacion.saveConductor(conductorGuardar);
-
+        Conductor savedConductor = conductorImplementacion.saveConductor(conductor);
 
         assertNotNull(savedConductor, "El conductor guardado no debería ser nulo");
-        assertEquals("Oswald Cortina ", savedConductor.getNombre(), "El nombre del conductor guardado no coincide");
+        assertEquals("Oswald Gutierrez", savedConductor.getNombre(), "El nombre del conductor guardado no coincide");
 
-        verify(conductorRepositorio, times(1)).save(eq(conductorGuardar));
-        System.out.println("El conductor registrado es: "+conductorGuardar);
+        verify(conductorRepositorio, times(1)).save(eq(conductor));
+        System.out.println("El conductor registrado es: "+conductor);
     }
 
     @Test
     void getConductor() {
-        Conductor conductor2 = new Conductor();
-        conductor2.setNombre("Daniel Gutierrez");
-        conductor2.setConductorId(Long.valueOf(10));
-
-        when(conductorRepositorio.findById(eq(10L))).thenReturn(Optional.of(conductor2));
+        when(conductorRepositorio.findById(eq(10L))).thenReturn(Optional.of(conductor));
         Conductor conductorObtenido = conductorImplementacion.getConductor(10L);
 
         verify(conductorRepositorio, times(1)).findById(eq(10L));
         assertNotNull(conductorObtenido);
-        assertEquals("Daniel Gutierrez", conductorObtenido.getNombre());
+        assertEquals("Oswald Gutierrez", conductorObtenido.getNombre());
 
-        System.out.println(conductor2);
+        System.out.println(conductor);
     }
 
     @Test
     void deleteConductor() {
 
-        Long conductorId = 105L;
+        when(conductorRepositorio.findById(eq(10L))).thenReturn(Optional.of(new Conductor()));
+        conductorImplementacion.deleteConductor(10L);
 
-        when(conductorRepositorio.findById(eq(conductorId))).thenReturn(Optional.of(new Conductor()));
-        conductorImplementacion.deleteConductor(conductorId);
-
-        verify(conductorRepositorio, times(1)).deleteById(eq(conductorId));
-        verify(conductorRepositorio, never()).findById(eq(conductorId));
-        verify(conductorRepositorio, times(1)).deleteById(eq(conductorId));
-        System.out.println("Id del conductor eliminado es:"+conductorId);
+        verify(conductorRepositorio, times(1)).deleteById(eq(10L));
+        verify(conductorRepositorio, never()).findById(eq(10L));
+        verify(conductorRepositorio, times(1)).deleteById(eq(10L));
+        System.out.println("Id del conductor eliminado es:"+10L);
 
     }
 }
