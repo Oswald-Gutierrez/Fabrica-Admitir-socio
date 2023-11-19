@@ -88,7 +88,7 @@ class ConductorImplementacionTest {
         verify(conductorRepositorio, times(1)).deleteById(eq(conductorId));
         verify(conductorRepositorio, never()).findById(eq(conductorId));
         verify(conductorRepositorio, times(1)).deleteById(eq(conductorId));
-        System.out.println("Id del conductor eliminado es: "+conductorId);
+        System.out.println("Id del conductor eliminado es:"+conductorId);
 
     }
 }
