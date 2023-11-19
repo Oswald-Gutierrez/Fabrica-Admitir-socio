@@ -22,7 +22,10 @@
 		<sonar.organization>codef-ctory2023</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<!-- other properties here compas-->
-	</properties>
+        <sonar.organization>oswald-gutierrez</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+    </properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
